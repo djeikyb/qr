@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:QrHag.Vm"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ViewModel"
+             x:Class="QrHag.StatusBar">
+  <StackPanel
+    Margin="0 3 0 3"
+    Spacing="6"
+    HorizontalAlignment="Center"
+    Orientation="Vertical">
+    <!-- <SelectableTextBlock> -->
+    <!--   <Run Text="{Binding WindowPositionDisplay.Value}" /> -->
+    <!--   <Run Text="{Binding WindowSizeDisplay.Value}" /> -->
+    <!-- </SelectableTextBlock> -->
+    <!-- <SelectableTextBlock Text="{Binding ScreencaptureRect.Value}" /> -->
+    <!-- <SelectableTextBlock Text="{Binding PathScreenshot}" /> -->
+    <SelectableTextBlock Text="{Binding DecodedText.Value}" />
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishAot>true</PublishAot>
+    <TrimMode>full</TrimMode>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Merviche.Logging" Version="1.0.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
+    <PackageReference Include="Ulid" Version="1.3.4" />
+    <PackageReference Include="ZLogger" Version="2.5.10"/>
+    <PackageReference Include="ZXing.Net" Version="0.16.10" />
+    <PackageReference Include="ZXing.Net.Bindings.ImageSharp.V3" Version="0.16.17" />
+  </ItemGroup>
+
+  <ItemGroup Label="Mvvm">
+    <PackageReference Include="R3" Version="1.3.0"/>
+    <PackageReference Include="R3Extensions.Avalonia" Version="1.3.0"/>
+  </ItemGroup>
+
+  <ItemGroup Label="Avalonia">
+    <PackageReference Include="Avalonia" Version="11.3.2"/>
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.2"/>
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.2"/>
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.2"/>
+    <PackageReference Include="HotAvalonia" Version="3.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+
+  <Target BeforeTargets="Publish" Name="asdf">
+    <Message Text="oop there we go aagi= $(MSBuildProjectFile)" Importance="high" />
+    <Message Text="$(AssemblyName)" Importance="high" />
+    <Message Text="$(RootNamespace)" Importance="high" />
+    <Message Text="$(PublishDir)" Importance="high" />
+  </Target>
+
+  <PropertyGroup>
+    <MacosBundleName>QrHag.app</MacosBundleName>
+  </PropertyGroup>
+
+  <Target DependsOnTargets="_CopyAotSymbols" AfterTargets="_CopyAotSymbols" Name="BundleMacosApp">
+    <ItemGroup>
+      <LibsAndExe Include="$(PublishDir)*.dylib;$(PublishDir)$(AssemblyName)" />
+    </ItemGroup>
+    <Message Text="oop there we go aagi= $(MSBuildProjectFile)" Importance="high" />
+    <Message Text="$(AssemblyName)" Importance="high" />
+    <Message Text="$(RootNamespace)" Importance="high" />
+    <Message Text="publish dir: $(PublishDir)" Importance="high" />
+    <RemoveDir Directories="$(ArtifactsPath)/$(MacosBundleName)" />
+    <!--    <MakeDir Directories="$(ArtifactsPath)/$(MacosBundleName)/Contents/MacOS"/>-->
+    <!--    <MakeDir Directories="$(ArtifactsPath)/$(MacosBundleName)/Contents/Resources"/>-->
+    <Message Text="copying plist" Importance="high" />
+    <Copy SourceFiles="$(ProjectDir)/Info.plist" DestinationFolder="$(ArtifactsPath)/$(MacosBundleName)/Contents"/>
+    <Message Text="copying icons" Importance="high" />
+    <Copy SourceFiles="$(ProjectDir)/icon.icns" DestinationFolder="$(ArtifactsPath)/$(MacosBundleName)/Contents/Resources"/>
+    <Message Text="copying dylib and exe: @(LibsAndExe)" Importance="high" />
+    <Message Text="                   to: $(ArtifactsPath)/$(MacosBundleName)/Contents/MacOS" Importance="high" />
+    <Copy UseHardlinksIfPossible="true" SourceFiles="@(LibsAndExe)" DestinationFolder="$(ArtifactsPath)/$(MacosBundleName)/Contents/MacOS"/>
+    <Message Text="now tree" Importance="high" />
+    <Hash ItemsToHash="@(LibsAndExe)" HashResult="LibsAndExeHashes" />
+    <Message Text="@(LibsAndExeHashes)" Importance="high" />
+    <Exec Command="tree --du -h '$(ArtifactsPath)/$(MacosBundleName)/'" >
+      <Output TaskParameter="ConsoleOutput" PropertyName="dunno" />
+    </Exec>
+  </Target>
+
+</Project>
+

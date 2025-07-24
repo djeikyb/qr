@@ -1,3 +1,7 @@
-Glances at the clipboard and if it seems like a qr code, decodes it.
+QrPaste: Glances at the clipboard and—
+
+QrGlass: Glances at your screen and—
+
+—tries to decode it.
 
 Tested (barely) on macos and nothing else.

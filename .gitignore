@@ -5,3 +5,4 @@
 *.DotSettings.user
 .vs/
 appsettings.*.json
+/QrHag/icon.icns

@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:QrHag.Vm"
+             xmlns:qrGlass="clr-namespace:QrHag"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ViewModel"
+             x:Class="QrHag.MainView">
+  <DockPanel>
+
+    <qrGlass:StatusBar Background="Aquamarine"
+                       DockPanel.Dock="Bottom" />
+
+    <Border BorderThickness=".5"
+            BorderBrush="{DynamicResource TitleBarSeparatorColorBottom}">
+      <Border BorderThickness="2"
+              BorderBrush="OrangeRed">
+        <Border BorderThickness=".5"
+                Background="#3fffffff"
+                Name="Eye"
+                BorderBrush="{DynamicResource TitleBarSeparatorColorTop}" />
+      </Border>
+    </Border>
+
+  </DockPanel>
+</UserControl>
