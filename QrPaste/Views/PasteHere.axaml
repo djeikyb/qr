@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:QrPaste.Vm"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ViewModel"
+             x:Class="QrPaste.Views.PasteHere">
+  <StackPanel>
+    <!-- <TextBlock Text="Welcome to Avalonia!" /> -->
+    <!-- <Button Command="{Binding Click}" Content="what's on paste" /> -->
+
+    <StackPanel Orientation="Horizontal">
+      <Label Content="Len" Target="DecodedLen" />
+      <TextBlock Name="DecodedLen"
+                 VerticalAlignment="Center"
+                 Text="{Binding DecodedRaw.Value.Length}" />
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <Label Content="B64" Target="B64" />
+      <TextBox Name="B64"
+               Width="200"
+               VerticalAlignment="Center"
+               HorizontalContentAlignment="Stretch"
+               Text="{Binding DecodedBase64.Value}" />
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <Label Content="Hex" Target="Hex" />
+      <TextBox Name="Hex"
+               Width="200"
+               Text="{Binding DecodedHex.Value}" />
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <Label Content="Plain" Target="Plain" />
+      <TextBox Name="Plain" Width="200" Text="{Binding DecodedText.Value}" />
+    </StackPanel>
+
+    <ItemsControl ItemsSource="{Binding Formats}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <SelectableTextBlock Text="{Binding}"></SelectableTextBlock>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <!-- <ListBox ItemsSource="{Binding Formats}" /> -->
+  </StackPanel>
+</UserControl>
